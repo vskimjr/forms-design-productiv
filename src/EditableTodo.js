@@ -9,29 +9,38 @@ import TodoForm from "./TodoForm";
  * - update(): fn to call to update a todo
  * - remove(): fn to call to remove a todo
  *
+ * State:
+ * - Edit - Boolean logic
+ *
  * EditableTodoList -> EditableTodo -> { Todo, TodoForm }
  */
 
 function EditableTodo({todo, update, remove}) {
 
-  let editState = false;
+  const [isEditing, setIsEditing] = useState(false);
 
   /** Toggle if this is being edited */
   function toggleEdit() {
-    editState = true;
+    setIsEditing(true);
    }
 
-  /** Call remove fn passed to this. */
-  function handleDelete() { }
+  /** Call remove fn passed to this. Takes and id as a string and invokes it in
+   * remove fn.
+   */
+  function handleDelete(id) {
+    remove(id);
+  }
 
   /** Edit form saved; toggle isEditing and update in ancestor. */
-  function handleSave(formData) { }
+  function handleSave(formData) {
+    setIsEditing(false);
+   }
 
   return (
       <div className="EditableTodo">
-        { editState
+        { isEditing
           ?
-            <TodoForm initialFormData={todo}/>
+            <TodoForm handleSave={handleSave} initialFormData={todo}/>
           :
           <div className="mb-3">
           <div className="float-end text-sm-end">
@@ -42,11 +51,16 @@ function EditableTodo({todo, update, remove}) {
             </button>
             <button
                 className="EditableTodo-delBtn btn-link btn btn-sm text-danger"
-                onClick={handleDelete}>
+                onClick={() => handleDelete(todo.id)}>
               Del
             </button>
           </div>
-          <Todo />
+          <Todo
+            id={todo.id}
+            title={todo.title}
+            description={todo.description}
+            priority={todo.priority}
+          />
         </div>
         }
 

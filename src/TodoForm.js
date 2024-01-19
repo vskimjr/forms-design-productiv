@@ -22,17 +22,28 @@ function TodoForm({handleSave, initialFormData={DEFAULT_DATA}}) {
   const [todoFormData, setFormData] = useState({initialFormData})
 
   /** Update form input. */
-  function handleChange(evt) { }
+  function handleChange(evt) {
+    const {name, value} = evt.target;
+    setFormData(fData => ({
+      ...fData,
+      [name]: value,
+    }));
+  }
 
   /** Call parent function and clear form. */
-  function handleSubmit(evt) { }
+  function handleSubmit(evt) {
+    evt.prevenDefault();
+    handleSave(todoFormData);
+    setFormData(DEFAULT_DATA);
+  }
 
   return (
-      <form className="NewTodoForm" onSubmit={handleSubmit}>
+      <form className="TodoForm" onSubmit={handleSubmit}>
 
         <div className="mb-3">
+          <label htmlFor="TodoForm-title"></label>
           <input
-              id="newTodo-title"
+              id="TodoForm-title"
               name="title"
               className="form-control"
               placeholder="Title"
@@ -43,8 +54,9 @@ function TodoForm({handleSave, initialFormData={DEFAULT_DATA}}) {
         </div>
 
         <div className="mb-3">
+        <label htmlFor="TodoForm-description"></label>
           <textarea
-              id="newTodo-description"
+              id="TodoForm-description"
               name="description"
               className="form-control"
               placeholder="Description"
@@ -56,12 +68,12 @@ function TodoForm({handleSave, initialFormData={DEFAULT_DATA}}) {
 
         <div className="mb-3 d-flex justify-content-between">
           <div className="w-75 d-flex justify-content-between">
-            <label htmlFor="newTodo-priority"
+            <label htmlFor="TodoForm-priority"
                    className="d-inline-flex">Priority:&nbsp;&nbsp;
             </label>
-            <select id="newTodo-priority"
+            <select id="TodoForm-priority"
                     name="priority"
-                    value="FIXME"
+                    value={todoFormData.priority}
                     onChange={handleChange}
                     className="form-control form-control-sm d-inline-flex"
             >
