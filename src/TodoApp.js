@@ -15,10 +15,16 @@ import EditableTodoList from "./EditableTodoList";
  * App -> TodoApp -> { TodoForm, EditableTodoList }
  */
 
-function TodoApp() {
+function TodoApp({ initialTodos=[] }) {
+
+  const [todos, setTodos] = useState(initialTodos);
 
   /** add a new todo to list */
   function create(newTodo) {
+    const newTodoWithID = {...newTodo, id: uuid()};
+    setTodos((currTodos) => {
+      [...currTodos, newTodoWithID];
+    })
   }
 
   /** update a todo with updatedTodo */
@@ -47,7 +53,7 @@ function TodoApp() {
 
             <section>
               <h3 className="mb-3">Add Nü</h3>
-              FIXME
+              <TodoForm handleSave={create} />
             </section>
           </div>
 
