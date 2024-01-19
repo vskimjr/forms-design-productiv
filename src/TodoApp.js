@@ -18,24 +18,33 @@ import TodoForm from "./TodoForm";
 
 function TodoApp({ initialTodos = [] }) {
 
+  console.log("Entered TodoApp Component");
+  console.log("initialTodos= ", initialTodos);
+
   const [todos, setTodos] = useState(initialTodos);
 
-  /** add a new todo to list */
+  /** add a new todo to list, takes in {title, description, priority, id}
+   * where title, description, and id are strings and priority is a number
+   */
+
   function create(newTodo) {
     const newTodoWithID = { ...newTodo, id: uuid() };
     setTodos((currTodos) => {
-     return [...currTodos, newTodoWithID];
+      return [...currTodos, newTodoWithID];
     });
   }
 
-  /** update a todo with updatedTodo */
+  /** update a todo with updatedTodo, takes in {title, description, priority, id}
+   * where title, description, and id are strings and priority is a number */
+
   function update(updatedTodo) {
     setTodos(currTodos => (currTodos.map((currTodo) =>
       currTodo.id === updatedTodo.id ? updatedTodo : currTodo)
     ));
   }
 
-  /** delete a todo by id */
+  /** delete a todo by id, takes in id which is a string */
+
   function remove(id) {
     setTodos((currTodos) => currTodos.filter(currTodo => currTodo.id !== id));
   }
