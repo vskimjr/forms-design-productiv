@@ -4,7 +4,7 @@ import React, { useState } from "react";
 const DEFAULT_DATA = {
   title: '',
   description: '',
-  priority: '',
+  priority: '', //TODO: Make this actually 1 to match the data type of the input field
   id: ''
 };
 
@@ -22,11 +22,14 @@ function TodoForm({ handleSave, initialFormData = { DEFAULT_DATA } }) {
   console.log("Entered TodoForm Component");
   console.log("handleSave= ", handleSave);
   console.log("initialFormData", initialFormData);
-
+  //TODO: Follow naming convention between state and setState
   const [todoFormData, setFormData] = useState(initialFormData);
 
   /** Update form input, takes in event. */
   function handleChange(evt) {
+    // TODO: Priority value is pulled out of the form as a STRING, but the app
+    // expects on this to be a Number, best place to make this change is here prior
+    // to leaving the form and maintaing this in form state.
     const { name, value } = evt.target;
     setFormData(fData => ({
       ...fData,
@@ -35,6 +38,7 @@ function TodoForm({ handleSave, initialFormData = { DEFAULT_DATA } }) {
   }
 
   /** Call parent function and clear form, takes in event. */
+  //TODO: Resetting to Defualt_Data, but really want to revert back to initialFormData in case this is passed to the function, which should be the default.
   function handleSubmit(evt) {
     evt.preventDefault();
     handleSave(todoFormData);

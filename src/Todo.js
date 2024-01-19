@@ -4,6 +4,7 @@ import React from "react";
  *
  * Props:
  * - todo: like { id, title, description, priority }
+ * //TODO: Update to actually match the props being used (id, title, descrip, priority)
  *
  * { EditableTodo, TopTodo } -> Todo
  **/
