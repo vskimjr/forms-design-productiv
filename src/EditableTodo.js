@@ -26,11 +26,7 @@ function EditableTodo({ todo, update, remove }) {
   const [isEditing, setIsEditing] = useState(false);
 
   /** Toggle if this is being edited using boolean logic */
-  //TODO: Make toggleEdit function an actual "on/off" switch (currently just on)
-  // and line 47 is not invoking toggleEdit to turn off. Add conditional ternary
-  // to make the switch
   function toggleEdit() {
-    // setIsEditing(true);
     setIsEditing(curr => curr === true ? false : true);
   }
 
@@ -38,9 +34,9 @@ function EditableTodo({ todo, update, remove }) {
    * remove fn.
    */
   function handleDelete(id) {
-    //TODO: Can do one or the other, the below accesses the current state and
-    //does not require the function having a parameter. Can be a nice way to handle
-    //this and not have to rely on multiple parameters.
+    // Can do one or the other, the below accesses the current state and
+    // does not require the function having a parameter. Can be a nice way to handle
+    // this and not have to rely on multiple parameters.
     // remove(todo.id);
     remove(id);
   }

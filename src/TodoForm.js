@@ -4,7 +4,7 @@ import React, { useState } from "react";
 const DEFAULT_DATA = {
   title: '',
   description: '',
-  priority: '', //TODO: Make this actually 1 to match the data type of the input field
+  priority: 1,
   id: ''
 };
 
@@ -17,32 +17,43 @@ const DEFAULT_DATA = {
  * { TodoApp, EditableTodo } -> TodoForm
  */
 
-function TodoForm({ handleSave, initialFormData = { DEFAULT_DATA } }) {
+function TodoForm({ handleSave, initialFormData = DEFAULT_DATA }) {
 
   console.log("Entered TodoForm Component");
   console.log("handleSave= ", handleSave);
   console.log("initialFormData", initialFormData);
-  //TODO: Follow naming convention between state and setState
-  const [todoFormData, setFormData] = useState(initialFormData);
+  const [todoFormData, setTodoFormData] = useState(initialFormData);
 
   /** Update form input, takes in event. */
   function handleChange(evt) {
-    // TODO: Priority value is pulled out of the form as a STRING, but the app
-    // expects on this to be a Number, best place to make this change is here prior
-    // to leaving the form and maintaing this in form state.
+    // FIXME: fixed bug where priority number was passed as string, debugging
+    // error "A component is changing an uncontrolled input to be controlled.
+    // This is likely caused by the value changing from undefined to a defined value, "
+
     const { name, value } = evt.target;
-    setFormData(fData => ({
-      ...fData,
-      [name]: value,
-    }));
+
+    console.log("****name: ", name, value, Number(value))
+
+    setTodoFormData(fData => (
+
+      name === "priority"
+        ?
+        {
+          ...fData,
+          priority: Number(value)
+        }
+        :
+        {
+          ...fData,
+          [name]: value,
+        }));
   }
 
   /** Call parent function and clear form, takes in event. */
-  //TODO: Resetting to Defualt_Data, but really want to revert back to initialFormData in case this is passed to the function, which should be the default.
   function handleSubmit(evt) {
     evt.preventDefault();
+    setTodoFormData(initialFormData);
     handleSave(todoFormData);
-    setFormData(DEFAULT_DATA);
   }
 
   return (
@@ -58,6 +69,7 @@ function TodoForm({ handleSave, initialFormData = { DEFAULT_DATA } }) {
           onChange={handleChange}
           value={todoFormData.title}
           aria-label="Title"
+          required
         />
       </div>
       <div className="mb-3">
@@ -70,6 +82,7 @@ function TodoForm({ handleSave, initialFormData = { DEFAULT_DATA } }) {
           onChange={handleChange}
           value={todoFormData.description}
           aria-label="Description"
+          required
         />
       </div>
 
