@@ -12,10 +12,14 @@ import TodoForm from "./TodoForm";
  * EditableTodoList -> EditableTodo -> { Todo, TodoForm }
  */
 
-function EditableTodo() {
+function EditableTodo({todo, update, remove}) {
+
+  let editState = false;
 
   /** Toggle if this is being edited */
-  function toggleEdit() { }
+  function toggleEdit() {
+    editState = true;
+   }
 
   /** Call remove fn passed to this. */
   function handleDelete() { }
@@ -25,28 +29,26 @@ function EditableTodo() {
 
   return (
       <div className="EditableTodo">
-
-                EITHER
-
-                <TodoForm />
-
-                OR
-
-                <div className="mb-3">
-                  <div className="float-end text-sm-end">
-                    <button
-                        className="EditableTodo-toggle btn-link btn btn-sm"
-                        onClick={toggleEdit}>
-                      Edit
-                    </button>
-                    <button
-                        className="EditableTodo-delBtn btn-link btn btn-sm text-danger"
-                        onClick={handleDelete}>
-                      Del
-                    </button>
-                  </div>
-                  <Todo />
-                </div>
+        { editState
+          ?
+            <TodoForm initialFormData={todo}/>
+          :
+          <div className="mb-3">
+          <div className="float-end text-sm-end">
+            <button
+                className="EditableTodo-toggle btn-link btn btn-sm"
+                onClick={toggleEdit}>
+              Edit
+            </button>
+            <button
+                className="EditableTodo-delBtn btn-link btn btn-sm text-danger"
+                onClick={handleDelete}>
+              Del
+            </button>
+          </div>
+          <Todo />
+        </div>
+        }
 
       </div>
   );

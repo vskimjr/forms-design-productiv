@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 
 
+const DEFAULT_DATA = {
+  title: '',
+  description: '',
+  priority: '',
+  id: ''
+}
+
 /** Form for adding.
  *
  * Props:
@@ -10,7 +17,9 @@ import React, { useState } from "react";
  * { TodoApp, EditableTodo } -> TodoForm
  */
 
-function TodoForm() {
+function TodoForm({handleSave, initialFormData={DEFAULT_DATA}}) {
+
+  const [todoFormData, setFormData] = useState({initialFormData})
 
   /** Update form input. */
   function handleChange(evt) { }
@@ -28,7 +37,7 @@ function TodoForm() {
               className="form-control"
               placeholder="Title"
               onChange={handleChange}
-              value="FIXME"
+              value={todoFormData.title}
               aria-label="Title"
           />
         </div>
@@ -40,7 +49,7 @@ function TodoForm() {
               className="form-control"
               placeholder="Description"
               onChange={handleChange}
-              value="FIXME"
+              value={todoFormData.description}
               aria-label="Description"
           />
         </div>
