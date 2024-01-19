@@ -19,7 +19,11 @@ const DEFAULT_DATA = {
 
 function TodoForm({handleSave, initialFormData={DEFAULT_DATA}}) {
 
-  const [todoFormData, setFormData] = useState({initialFormData})
+  console.log("****INITIAL FORM DATA: ", initialFormData)
+
+  const [todoFormData, setFormData] = useState(initialFormData)
+
+
 
   /** Update form input. */
   function handleChange(evt) {
@@ -32,10 +36,12 @@ function TodoForm({handleSave, initialFormData={DEFAULT_DATA}}) {
 
   /** Call parent function and clear form. */
   function handleSubmit(evt) {
-    evt.prevenDefault();
+    evt.preventDefault();
     handleSave(todoFormData);
     setFormData(DEFAULT_DATA);
   }
+
+  console.log("**** FORM VALS: ", todoFormData, )
 
   return (
       <form className="TodoForm" onSubmit={handleSubmit}>
@@ -52,7 +58,6 @@ function TodoForm({handleSave, initialFormData={DEFAULT_DATA}}) {
               aria-label="Title"
           />
         </div>
-
         <div className="mb-3">
         <label htmlFor="TodoForm-description"></label>
           <textarea
